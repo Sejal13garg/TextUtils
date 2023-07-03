@@ -1,6 +1,7 @@
 import React , {useState} from 'react'
 
 export default function Textform(props) {
+  
     const handleOnChange=(event)=>{
         
         setText(event.target.value);
@@ -19,7 +20,7 @@ export default function Textform(props) {
       setText("");
       props.showAlert("text has been cleared" , "success")
     }
-    const [text , setText] = useState("Enter your text");
+    const [text , setText] = useState("");
   return (
     <>
     <div className='container'>
@@ -30,17 +31,21 @@ export default function Textform(props) {
     <textarea className='form-control' value={text} onChange={handleOnChange} id = "myBox" rows="8" ></textarea>
     
   </div>
-  <button className='btn btn-primary mx-2' onClick={handleUpClick}>Convert to upper case</button>
-  <button className='btn btn-primary mx-2' onClick={handleLoClick}>Convert to lower case</button>
-  <button className='btn btn-primary mx-2' onClick={handleClearClick}>Clear text</button>
+  <button disabled={text.length===0} className='btn btn-primary mx-2 my-1' onClick={handleUpClick}>Convert to upper case</button>
+  <button disabled={text.length===0} className='btn btn-primary mx-2 my-1' onClick={handleLoClick}>Convert to lower case</button>
+  <button disabled={text.length===0} className='btn btn-primary mx-2 my-1' onClick={handleClearClick}>Clear text</button>
   
 
     </div>
     <div className="container my-4">
       <h1>Your text Summary</h1>
-      <p>{text.split(" ").length} total words</p>
+      <p>{text.split(" ").filter((element)=>{
+        return element.length!==0
+      }).length} total words</p>
       <p>{text.length} total characters</p>
-      <p>{text.split(" ").length/125} Minutes to read </p>
+      <p>{text.split(" ").filter((element)=>{
+        return element.length!==0
+      }).length/125} Minutes to read </p>
       <h3>Preview:-</h3>
       <p>{text}</p>
     </div>
